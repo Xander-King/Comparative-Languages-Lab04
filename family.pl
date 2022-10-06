@@ -24,30 +24,49 @@ parent_of(jess, simon).
 parent_of(ali, simon).
 parent_of(lily, harry).
 parent_of(james, harry).
+
  
 % Rules 
 %  NOTE: If possible, avoid using 
 %        disjunction (;) in your rules
 
 %TODO: Write father_of/2
- 
+father_of(F, C) :- parent_of(F, C), male(F). 
+% F is the father of C if F is the parent of C and F is male
+
 %TODO: Write mother_of/2
+mother_of(M, C) :- parent_of(M, C), female(M).
+% M is the mother of C if M is the parent of C and M is female
 
 %TODO: Write grandfather_of/2
+grandfather_of(G, C) :- 
+   father_of(G, Somebody), 
+   parent_of(Somebody, C).
+
+%TODO: Write grandmother_of/2
+grandmother_of(G, C) :- 
+   mother_of(G, Somebody),
+   parent_of(Somebody, C).
+
+%TODO: Write sister_of/2
+sister_of(S, B) :- 
+   parent_of(Somebody, S),
+   parent_of(Somebody, B),
+   female(S),
+   S \= B.
+
+%TODO: Write aunt_of/2
+aunt_of(A, C) :-
+   parent_of(Somebody, C),
+   sister_of(A, Somebody).
  
-% TODO: Write grandmother_of/2
+%TODO: Write ancestor_of/2
+ancestor_of(A, B) :- 
+   parent_of(A, C),
+   ancestor_of(C, B).
+   ancestor_of(X, Y) :- parent_of(X, Y).
 
-% TODO: Write sister_of/2
-%      HINT: Use multiple clauses instead of disjunction
- 
-
-% TODO: Write aunt_of/2
-
- 
-% TODO: Write ancestor_of
-
-
-%% Tests
+%Tests
 
 :- mother_of(X, jess), format('The mother of ~w is ~w~n', [jess,X]).
 :- father_of(X, jess), format('The father of ~w is ~w~n', [jess,X]).

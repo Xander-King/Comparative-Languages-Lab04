@@ -3,7 +3,11 @@
 %   0! = 1
 
 %% TODO -- Put your implementation here
-
+fact(0, 1).
+fact(N, X) :-
+    TMP is N - 1,
+    fact(TMP, MULT),
+    X is N * MULT.
 %% Testing
 
 :- fact(5, X), format('5! is ~d~n', X), !.
